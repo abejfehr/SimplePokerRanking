@@ -10,5 +10,16 @@ public class TestGame {
 
 		assertTrue(game.getNumPlayers() == 0);
 	}
+	
+	@Test
+	public void testAddPlayerToGame() {
+		Game game = new Game();
+		
+		int arbitraryPlayerId = 1;
+		String arbitraryHand = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades KingDiamonds";
+		game.addPlayer(arbitraryPlayerId, arbitraryHand);
+		
+		assertTrue(game.getNumPlayers() == 1);
+	}
 
 }
