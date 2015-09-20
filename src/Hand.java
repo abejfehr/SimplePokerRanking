@@ -15,4 +15,8 @@ public class Hand {
 		return cards.length;
 	}
 	
+	public boolean isSorted() {
+		return false;
+	}
+	
 }
