@@ -24,4 +24,15 @@ public class TestHand {
 		assertTrue(hand.getNumCards() == 5);
 	}
 
+	@Test
+	public void testHandNotSorted() {
+		int arbitraryPlayerId = 1;
+		String arbitraryHand = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
+
+		Hand hand = new Hand(arbitraryPlayerId, arbitraryHand);
+		
+		assertFalse(hand.isSorted());
+		
+	}
+	
 }
