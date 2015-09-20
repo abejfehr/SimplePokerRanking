@@ -32,7 +32,15 @@ public class TestHand {
 		Hand hand = new Hand(arbitraryPlayerId, arbitraryHand);
 		
 		assertFalse(hand.isSorted());
-		
 	}
 	
+	@Test
+	public void testHandRanking() {
+		int arbitraryPlayerId = 1;
+		String highCardHand = "TwoHearts SixDiamonds NineHearts AceDiamonds FiveSpades";
+
+		Hand hand = new Hand(arbitraryPlayerId, highCardHand);
+		
+		assertTrue(hand.getRanking() == Ranking.HIGH_CARD);
+	}
 }

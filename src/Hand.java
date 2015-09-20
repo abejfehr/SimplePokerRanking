@@ -36,4 +36,12 @@ public class Hand {
 		return false;
 	}
 	
+	/**
+	 * Gets the ranking of the hand
+	 * 
+	 * @return the ranking of the hand
+	 */
+	public int getRanking() {
+		return Ranking.HIGH_CARD;
+	}
 }
