@@ -1,7 +1,7 @@
 
 public class Hand {
 	
-	String[] cards;
+	private String[] cards;
 	
 	public Hand(int playerId, String cards) {
 		if(cards.trim().equals("")) {
