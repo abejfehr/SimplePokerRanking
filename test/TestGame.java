@@ -16,7 +16,7 @@ public class TestGame {
 		Game game = new Game();
 		
 		int arbitraryPlayerId = 1;
-		String arbitraryHand = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades KingDiamonds";
+		String arbitraryHand = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
 		game.addPlayer(arbitraryPlayerId, arbitraryHand);
 		
 		assertTrue(game.getNumPlayers() == 1);

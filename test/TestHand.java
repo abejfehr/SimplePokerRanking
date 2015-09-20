@@ -6,9 +6,22 @@ public class TestHand {
 
 	@Test
 	public void testHandEmpty() {
-		Hand hand = new Hand(1, "");
+		int arbitraryPlayerId = 1;
+		String emptyHand = "";
+
+		Hand hand = new Hand(arbitraryPlayerId, emptyHand);
 		
 		assertTrue(hand.getNumCards() == 0);
+	}
+	
+	@Test
+	public void testHandCardCount() {
+		int arbitraryPlayerId = 1;
+		String arbitraryHand = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
+
+		Hand hand = new Hand(arbitraryPlayerId, arbitraryHand);
+		
+		assertTrue(hand.getNumCards() == 5);
 	}
 
 }

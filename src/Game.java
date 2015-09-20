@@ -6,8 +6,8 @@ public class Game {
 	private HashMap<Integer, String> players;
 	
 	public Game() {
-		numPlayers = 0;
-		players = new HashMap<Integer, String>();
+		this.numPlayers = 0;
+		this.players = new HashMap<Integer, String>();
 	}
 	
 	public int getNumPlayers() {
