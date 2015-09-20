@@ -8,8 +8,8 @@ public class TestCard {
 	public void testHasValueAndSuit() {
 		Card twoHearts = new Card("TwoHearts");
 		
-		assertTrue(twoHearts.getValue() == 2);
-		assertTrue(twoHearts.getSuit() == "Hearts");
+		assertTrue(twoHearts.getRank() == 2);
+		assertTrue(twoHearts.getSuit() == Card.HEARTS);
 	}
 
 }
