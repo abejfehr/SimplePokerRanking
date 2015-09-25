@@ -1,3 +1,7 @@
-# COMP4004 Assignment1
+# [Simple Poker](https://github.com/abejfehr/SimplePoker)
 
-Assignment 1 of the Software Quality Assurance class at Carleton University
+**Name:** Abram Fehr
+**Student Number:** 100908743
+**Link to Assignment:** [https://github.com/abejfehr/SimplePoker](https://github.com/abejfehr/SimplePoker)
+
+The test code should be runnable just by opening the project in Eclipse and running the tests from the `test` directory.
