@@ -6,10 +6,16 @@ public class TestCard {
 
 	@Test
 	public void testHasValueAndSuit() throws ImpossibleCardException {
-		Card twoHearts = new Card("TwoHearts");
-		
+		Card twoHearts = new Card("TwoHearts");	
 		assertTrue(twoHearts.getRank() == 2);
 		assertTrue(twoHearts.getSuit() == Card.HEARTS);
+	}
+	
+	@Test
+	public void testCardConstructorCaseInsensetive() throws ImpossibleCardException {
+		Card twoHearts = new Card("tWohEARts");
+		assertTrue(twoHearts.getRank() == 2);
+		assertTrue(twoHearts.getSuit() == Card.HEARTS);		
 	}
 
 	@Test(expected=ImpossibleCardException.class)
