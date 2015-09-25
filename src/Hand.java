@@ -15,20 +15,20 @@ public class Hand {
 	 * @param playerId the player's ID in the game
 	 * @param cards a whitespace separated list of cards, given in RankSuit format. For example: 
 	 *        "TwoHearts AceSpades" would constitute a valid hand
-	 * @throws ImpossibleCardException 
+	 * @throws ImpossibleCardException when an impossible card is created(eg. FourGoats, etc)
+	 * @throws NonStandardHandException when a number other than 5 cards is given
 	 */
-	public Hand(int playerId, String hand) throws ImpossibleCardException {
+	public Hand(int playerId, String hand) throws ImpossibleCardException, NonStandardHandException {
 		
 		// Initialize the lists of cards
 		cards = new ArrayList<Card>();
 		cardsBySuit = new TreeMap<String, ArrayList<Card>>();
 		cardsByRank = new TreeMap<Integer, ArrayList<Card>>();
 		
-		String[] rankSuits;
-		if(hand.trim().equals("")) {
-			rankSuits = new String[0];
-		} else {
-			rankSuits = hand.split("\\s+");
+		String[] rankSuits = hand.split("\\s+");
+		// A hand needs 5 cards
+		if(rankSuits.length != 5) {
+			throw new NonStandardHandException();
 		}
 		for(String rankSuit : rankSuits) {
 			Card card = new Card(rankSuit);

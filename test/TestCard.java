@@ -28,6 +28,5 @@ public class TestCard {
 	public void testImpossibleSuit() throws ImpossibleCardException {
 		new Card("ThreeShovels");
 		fail();
-	}
-	
+	}	
 }
