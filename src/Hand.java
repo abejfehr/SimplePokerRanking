@@ -80,6 +80,12 @@ public class Hand {
 	 * @return the ranking of the hand
 	 */
 	public int getRanking() {
+		if(isStraight() && isFlush()) {
+			return Ranking.STRAIGHT_FLUSH;
+		}
+		if(isFullHouse()) {
+			return Ranking.FULL_HOUSE;
+		}
 		if(isFlush()) {
 			return Ranking.FLUSH;
 		}
@@ -103,7 +109,7 @@ public class Hand {
 	 * <p>
 	 * Warning: This is a private method because it is not meant to be called outside the context
 	 * of the checks done in {@code getRanking()}. This method will return true for one pair even
-	 * if the hand contains two pairs or three of a kind.
+	 * if the hand contains two pairs
 	 * 
 	 * @return whether or not the hand contains one pair
 	 */
@@ -111,7 +117,7 @@ public class Hand {
 	    Iterator<Entry<Integer, ArrayList<Card>>> it = cardsByRank.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Entry<Integer, ArrayList<Card>> pair = it.next();
-	        if(cardsByRank.get(pair.getKey()).size() >= 2) {
+	        if(cardsByRank.get(pair.getKey()).size() == 2) {
 	        	return true;
 	        }
 	    }
@@ -120,10 +126,6 @@ public class Hand {
 	
 	/**
 	 * Returns whether or not the hand contains two pairs
-	 * <p>
-	 * Warning: This is a private method because it is not meant to be called outside the context
-	 * of the checks done in {@code getRanking()}. This method will return true for two pairs even
-	 * if the hand contains a full house
 	 * 
 	 * @return whether or not the hand contains two pairs
 	 */
@@ -134,7 +136,7 @@ public class Hand {
 	    Iterator<Entry<Integer, ArrayList<Card>>> it = cardsByRank.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Entry<Integer, ArrayList<Card>> pair = it.next();
-	        if(cardsByRank.get(pair.getKey()).size() >= 2) {
+	        if(cardsByRank.get(pair.getKey()).size() == 2) {
 	        	++count;
 	        }
 	    }
@@ -154,7 +156,7 @@ public class Hand {
 	    Iterator<Entry<Integer, ArrayList<Card>>> it = cardsByRank.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Entry<Integer, ArrayList<Card>> pair = it.next();
-	        if(cardsByRank.get(pair.getKey()).size() >= 3) {
+	        if(cardsByRank.get(pair.getKey()).size() == 3) {
 	        	return true;
 	        }
 	    }
@@ -166,7 +168,7 @@ public class Hand {
 	 * <p>
 	 * Warning: This is a private method because it is not meant to be called outside the context
 	 * of the checks done in {@code getRanking()}. This method will return true for straights even
-	 * if the hand contains a straight flush
+	 * if the hand contains a straight flush or royal flush
 	 * 
 	 * @return whether or not the hand is a straight
 	 */
@@ -187,13 +189,13 @@ public class Hand {
 	    }
 		return false;
 	}
-	
+
 	/**
 	 * Returns whether or not the hand is a flush
 	 * <p>
 	 * Warning: This is a private method because it is not meant to be called outside the context
 	 * of the checks done in {@code getRanking()}. This method will return true for flushes even if
-	 * the hand contains a straight or royal flush
+	 * the hand contains a straight flush or royal flush
 	 * 
 	 * @return whether or not the hand is a flush
 	 */
@@ -207,4 +209,24 @@ public class Hand {
 	    }
 	    return false;
 	}
+
+	/**
+	 * Returns whether or not the hand is a full house
+	 * 
+	 * @return whether or not the hand is a flush
+	 */
+	private boolean isFullHouse() {
+		boolean hasThreeOfAKind = false, hasPair = false;
+	    Iterator<Entry<Integer, ArrayList<Card>>> it = cardsByRank.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Entry<Integer, ArrayList<Card>> pair = it.next();
+	        if(cardsByRank.get(pair.getKey()).size() == 3) {
+	        	hasThreeOfAKind = true;
+	        } else if(cardsByRank.get(pair.getKey()).size() == 2) {
+	        	hasPair = true;
+	        }
+	    }
+	    return hasThreeOfAKind && hasPair;
+	}
+	
 }

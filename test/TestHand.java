@@ -16,7 +16,9 @@ public class TestHand {
 	private static final String straightAceLowHand = "FiveClubs FourDiamonds ThreeSpades TwoHearts AceHearts";
 	private static final String straightAceHighHand = "TenClubs JackDiamonds QueenSpades KingHearts AceHearts";
 	private static final String flushHand = "AceSpades TenSpades SevenSpades SixSpades TwoSpades";
-
+	private static final String fullHouseHand = "AceHearts AceSpades AceDiamonds KingHearts KingSpades";
+	private static final String straightFlushHand = "NineClubs EightClubs SevenClubs SixClubs FiveClubs";
+	
 	@Test
 	public void testHandEmpty() {
 		String emptyHand = "";
@@ -94,5 +96,17 @@ public class TestHand {
 		// Sanity check, just to make sure we're not wrongly ranking another hand
 		Hand newHand = new Hand(arbitraryPlayerId, highCardHand);
 		assertFalse(newHand.getRanking() == Ranking.FLUSH);
+	}
+	
+	@Test
+	public void testRankingFullHouse() {
+		Hand hand = new Hand(arbitraryPlayerId, fullHouseHand);
+		assertTrue(hand.getRanking() == Ranking.FULL_HOUSE);
+	}
+	
+	@Test
+	public void testRankingStraightFlush() {
+		Hand hand = new Hand(arbitraryPlayerId, straightFlushHand);
+		assertTrue(hand.getRanking() == Ranking.STRAIGHT_FLUSH);
 	}
 }
