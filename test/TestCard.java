@@ -7,25 +7,27 @@ public class TestCard {
 	@Test
 	public void testHasValueAndSuit() throws ImpossibleCardException {
 		Card twoHearts = new Card("TwoHearts");	
-		assertTrue(twoHearts.getRank() == 2);
-		assertTrue(twoHearts.getSuit() == Card.HEARTS);
+		assertEquals(twoHearts.getRank(), 2);
+		assertEquals(twoHearts.getSuit(), Card.HEARTS);
 	}
 	
 	@Test
 	public void testCardConstructorCaseInsensetive() throws ImpossibleCardException {
 		Card twoHearts = new Card("tWohEARts");
-		assertTrue(twoHearts.getRank() == 2);
-		assertTrue(twoHearts.getSuit() == Card.HEARTS);		
+		assertEquals(twoHearts.getRank(), 2);
+		assertEquals(twoHearts.getSuit(), Card.HEARTS);		
 	}
 
 	@Test(expected=ImpossibleCardException.class)
 	public void testImpossibleRank() throws ImpossibleCardException {
-		Card impossible = new Card("FourteenClubs");
+		new Card("FourteenClubs");
+		fail(); // Should fail if it got here before throwing an exception
 	}
 	
 	@Test(expected=ImpossibleCardException.class)
 	public void testImpossibleSuit() throws ImpossibleCardException {
-		Card impossible = new Card("ThreeShovels");
+		new Card("ThreeShovels");
+		fail();
 	}
 	
 }

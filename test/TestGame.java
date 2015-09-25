@@ -8,8 +8,8 @@ public class TestGame {
 	public void testGameNoPlayers() {
 		Game game = new Game();
 
-		assertTrue(game.getNumPlayers() == 0);
-		assertTrue(game.getState() == GameState.SETUP);
+		assertEquals(game.getNumPlayers(), 0);
+		assertEquals(game.getState(), GameState.SETUP);
 	}
 	
 	@Test
@@ -20,7 +20,7 @@ public class TestGame {
 		String arbitraryHand = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
 		game.addPlayer(arbitraryPlayerId, arbitraryHand);
 		
-		assertTrue(game.getNumPlayers() == 1);
+		assertEquals(game.getNumPlayers(), 1);
 	}
 
 	@Test(expected=IllegalGameStateException.class)
@@ -38,10 +38,10 @@ public class TestGame {
 
 		game.rankPlayers();
 		
-
 		int arbitraryPlayerId3 = 3;
 		String arbitraryHand3 = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
 
 		game.addPlayer(arbitraryPlayerId3, arbitraryHand3);
-}
+		fail(); // Test fails if it gets here, exception should've been thrown by now
+	}
 }
