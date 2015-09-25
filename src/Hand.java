@@ -80,6 +80,9 @@ public class Hand {
 	 * @return the ranking of the hand
 	 */
 	public int getRanking() {
+		if(isFlush()) {
+			return Ranking.FLUSH;
+		}
 		if(isStraight()) {
 			return Ranking.STRAIGHT;
 		}
@@ -183,5 +186,25 @@ public class Hand {
         	}
 	    }
 		return false;
+	}
+	
+	/**
+	 * Returns whether or not the hand is a flush
+	 * <p>
+	 * Warning: This is a private method because it is not meant to be called outside the context
+	 * of the checks done in {@code getRanking()}. This method will return true for flushes even if
+	 * the hand contains a straight or royal flush
+	 * 
+	 * @return whether or not the hand is a flush
+	 */
+	private boolean isFlush() {
+	    Iterator<Entry<String, ArrayList<Card>>> it = cardsBySuit.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Entry<String, ArrayList<Card>> pair = it.next();
+	        if(cardsBySuit.get(pair.getKey()).size() == 5) {
+	        	return true;
+	        }
+	    }
+	    return false;
 	}
 }

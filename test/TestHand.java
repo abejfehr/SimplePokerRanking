@@ -15,6 +15,7 @@ public class TestHand {
 	private static final String threeOfAKindHand = "AceHearts AceSpades AceClubs KingSpades JackDiamonds";
 	private static final String straightAceLowHand = "FiveClubs FourDiamonds ThreeSpades TwoHearts AceHearts";
 	private static final String straightAceHighHand = "TenClubs JackDiamonds QueenSpades KingHearts AceHearts";
+	private static final String flushHand = "AceSpades TenSpades SevenSpades SixSpades TwoSpades";
 
 	@Test
 	public void testHandEmpty() {
@@ -45,7 +46,7 @@ public class TestHand {
 	public void testRankingOnePair() {
 		Hand hand = new Hand(arbitraryPlayerId, onePairHand);
 		assertTrue(hand.getRanking() == Ranking.ONE_PAIR);
-		// Sanity check, just to make sure we're not wrongly ranking these
+		// Sanity check, just to make sure we're not wrongly ranking another hand
 		Hand newHand = new Hand(arbitraryPlayerId, highCardHand);
 		assertFalse(newHand.getRanking() == Ranking.ONE_PAIR);
 	}
@@ -54,7 +55,7 @@ public class TestHand {
 	public void testRankingTwoPair() {
 		Hand hand = new Hand(arbitraryPlayerId, twoPairHand);
 		assertTrue(hand.getRanking() == Ranking.TWO_PAIR);
-		// Sanity check, just to make sure we're not wrongly ranking these
+		// Sanity check, just to make sure we're not wrongly ranking another hand
 		Hand newHand = new Hand(arbitraryPlayerId, onePairHand);
 		assertFalse(newHand.getRanking() == Ranking.TWO_PAIR);
 	}
@@ -62,8 +63,8 @@ public class TestHand {
 	@Test
 	public void testRankingThreeOfAKind() {
 		Hand hand = new Hand(arbitraryPlayerId, threeOfAKindHand);
-		assertTrue(hand.getRanking() == Ranking.THREE_OF_A_KIND);		
-		// Sanity check, just to make sure we're not wrongly ranking these
+		assertTrue(hand.getRanking() == Ranking.THREE_OF_A_KIND);
+		// Sanity check, just to make sure we're not wrongly ranking another hand
 		Hand newHand = new Hand(arbitraryPlayerId, onePairHand);
 		assertFalse(newHand.getRanking() == Ranking.THREE_OF_A_KIND);
 	}
@@ -71,18 +72,27 @@ public class TestHand {
 	@Test
 	public void testRankingStraightAceLow() {
 		Hand hand = new Hand(arbitraryPlayerId, straightAceLowHand);
-		assertTrue(hand.getRanking() == Ranking.STRAIGHT);		
-		// Sanity check, just to make sure we're not wrongly ranking these
+		assertTrue(hand.getRanking() == Ranking.STRAIGHT);
+		// Sanity check, just to make sure we're not wrongly ranking another hand
 		Hand newHand = new Hand(arbitraryPlayerId, onePairHand);
 		assertFalse(newHand.getRanking() == Ranking.STRAIGHT);
 	}
-	
+
 	@Test
 	public void testRankingStraightAceHigh() {
 		Hand hand = new Hand(arbitraryPlayerId, straightAceHighHand);
-		assertTrue(hand.getRanking() == Ranking.STRAIGHT);		
-		// Sanity check, just to make sure we're not wrongly ranking these
+		assertTrue(hand.getRanking() == Ranking.STRAIGHT);
+		// Sanity check, just to make sure we're not wrongly ranking another hand
 		Hand newHand = new Hand(arbitraryPlayerId, onePairHand);
-		assertFalse(newHand.getRanking() == Ranking.STRAIGHT);		
+		assertFalse(newHand.getRanking() == Ranking.STRAIGHT);
+	}
+
+	@Test
+	public void testRankingFlush() {
+		Hand hand = new Hand(arbitraryPlayerId, flushHand);
+		assertTrue(hand.getRanking() == Ranking.FLUSH);
+		// Sanity check, just to make sure we're not wrongly ranking another hand
+		Hand newHand = new Hand(arbitraryPlayerId, highCardHand);
+		assertFalse(newHand.getRanking() == Ranking.FLUSH);
 	}
 }
