@@ -1,14 +1,13 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 public class Hand {
 	
 	private ArrayList<Card> cards;
-	private HashMap<String, ArrayList<Card>> cardsBySuit;
-	private HashMap<Integer, ArrayList<Card>> cardsByRank;
+	private TreeMap<String, ArrayList<Card>> cardsBySuit;
+	private TreeMap<Integer, ArrayList<Card>> cardsByRank;
 	
 	/**
 	 * Creates a new instance of the {@code Hand} class
@@ -21,8 +20,8 @@ public class Hand {
 		
 		// Initialize the lists of cards
 		cards = new ArrayList<Card>();
-		cardsBySuit = new HashMap<String, ArrayList<Card>>();
-		cardsByRank = new HashMap<Integer, ArrayList<Card>>();
+		cardsBySuit = new TreeMap<String, ArrayList<Card>>();
+		cardsByRank = new TreeMap<Integer, ArrayList<Card>>();
 		
 		String[] rankSuits;
 		if(hand.trim().equals("")) {
@@ -48,6 +47,12 @@ public class Hand {
 			}
 			rankList.add(card);
 			cardsByRank.put(card.getRank(), rankList);
+		}
+		// Add empty lists for all ranks that aren't contained in your hand
+		for(int i=1;i<=13;++i) {
+			if(cardsByRank.get(i) == null) {
+				cardsByRank.put(i, new ArrayList<Card>());
+			}
 		}
 	}
 	
@@ -75,7 +80,9 @@ public class Hand {
 	 * @return the ranking of the hand
 	 */
 	public int getRanking() {
-		
+		if(isStraight()) {
+			return Ranking.STRAIGHT;
+		}
 		if(isThreeOfAKind()) {
 			return Ranking.THREE_OF_A_KIND;
 		}
@@ -100,7 +107,7 @@ public class Hand {
 	private boolean isOnePair() {
 	    Iterator<Entry<Integer, ArrayList<Card>>> it = cardsByRank.entrySet().iterator();
 	    while (it.hasNext()) {
-	        Map.Entry pair = (Map.Entry)it.next();
+	        Entry<Integer, ArrayList<Card>> pair = it.next();
 	        if(cardsByRank.get(pair.getKey()).size() >= 2) {
 	        	return true;
 	        }
@@ -118,10 +125,12 @@ public class Hand {
 	 * @return whether or not the hand contains two pairs
 	 */
 	private boolean isTwoPair() {
-	    Iterator<Entry<Integer, ArrayList<Card>>> it = cardsByRank.entrySet().iterator();
+		// Store the number of pairs
 	    int count = 0;
+	    // Loop through the cards(by rank)
+	    Iterator<Entry<Integer, ArrayList<Card>>> it = cardsByRank.entrySet().iterator();
 	    while (it.hasNext()) {
-	        Map.Entry pair = (Map.Entry)it.next();
+	        Entry<Integer, ArrayList<Card>> pair = it.next();
 	        if(cardsByRank.get(pair.getKey()).size() >= 2) {
 	        	++count;
 	        }
@@ -129,7 +138,6 @@ public class Hand {
 	    return count >= 2;
 	}
 
-	
 	/**
 	 * Returns whether or not the hand contains three of a kind
 	 * <p>
@@ -142,11 +150,38 @@ public class Hand {
 	private boolean isThreeOfAKind() {
 	    Iterator<Entry<Integer, ArrayList<Card>>> it = cardsByRank.entrySet().iterator();
 	    while (it.hasNext()) {
-	        Map.Entry pair = (Map.Entry)it.next();
+	        Entry<Integer, ArrayList<Card>> pair = it.next();
 	        if(cardsByRank.get(pair.getKey()).size() >= 3) {
 	        	return true;
 	        }
 	    }
 	    return false;
+	}
+	
+	/**
+	 * Returns whether or not the hand is a straight
+	 * <p>
+	 * Warning: This is a private method because it is not meant to be called outside the context
+	 * of the checks done in {@code getRanking()}. This method will return true for straights even
+	 * if the hand contains a straight flush
+	 * 
+	 * @return whether or not the hand is a straight
+	 */
+	private boolean isStraight() {
+	    // Store the number of consecutive cards in a row we've seen so far
+	    int cardsInARow = 0;
+	    // Loop through the cards(by rank) and check for a straight
+	    cardsInARow = 0;
+	    for(int i=1;i<15;++i) { // Loops through all cards including Ace as a high card
+	    	if(cardsByRank.get(i % 14 == 0 ? 1 : i).size() == 1) {
+	        	if(++cardsInARow == 5) {
+	        		return true;
+	        	}
+	    	} else {
+        		// Reset the number of consecutive cards seen
+        		cardsInARow = 0;
+        	}
+	    }
+		return false;
 	}
 }

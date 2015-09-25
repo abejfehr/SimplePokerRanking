@@ -13,7 +13,8 @@ public class TestHand {
 	private static final String onePairHand = "AceHearts AceSpades KingHearts QueenSpades JackDiamonds";
 	private static final String twoPairHand = "AceHearts AceSpades KingClubs KingDiamonds QueenSpades";
 	private static final String threeOfAKindHand = "AceHearts AceSpades AceClubs KingSpades JackDiamonds";
-
+	private static final String straightAceLowHand = "FiveClubs FourDiamonds ThreeSpades TwoHearts AceHearts";
+	private static final String straightAceHighHand = "TenClubs JackDiamonds QueenSpades KingHearts AceHearts";
 
 	@Test
 	public void testHandEmpty() {
@@ -65,5 +66,23 @@ public class TestHand {
 		// Sanity check, just to make sure we're not wrongly ranking these
 		Hand newHand = new Hand(arbitraryPlayerId, onePairHand);
 		assertFalse(newHand.getRanking() == Ranking.THREE_OF_A_KIND);
+	}
+	
+	@Test
+	public void testRankingStraightAceLow() {
+		Hand hand = new Hand(arbitraryPlayerId, straightAceLowHand);
+		assertTrue(hand.getRanking() == Ranking.STRAIGHT);		
+		// Sanity check, just to make sure we're not wrongly ranking these
+		Hand newHand = new Hand(arbitraryPlayerId, onePairHand);
+		assertFalse(newHand.getRanking() == Ranking.STRAIGHT);
+	}
+	
+	@Test
+	public void testRankingStraightAceHigh() {
+		Hand hand = new Hand(arbitraryPlayerId, straightAceHighHand);
+		assertTrue(hand.getRanking() == Ranking.STRAIGHT);		
+		// Sanity check, just to make sure we're not wrongly ranking these
+		Hand newHand = new Hand(arbitraryPlayerId, onePairHand);
+		assertFalse(newHand.getRanking() == Ranking.STRAIGHT);		
 	}
 }
