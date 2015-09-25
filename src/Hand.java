@@ -76,7 +76,12 @@ public class Hand {
 	 */
 	public int getRanking() {
 		
-		
+		if(isThreeOfAKind()) {
+			return Ranking.THREE_OF_A_KIND;
+		}
+		if(isTwoPair()) {
+			return Ranking.TWO_PAIR;
+		}
 		if(isOnePair()) {
 			return Ranking.ONE_PAIR;
 		}
@@ -88,7 +93,7 @@ public class Hand {
 	 * <p>
 	 * Warning: This is a private method because it is not meant to be called outside the context
 	 * of the checks done in {@code getRanking()}. This method will return true for one pair even
-	 * if the hand is two pairs or three of a kind.
+	 * if the hand contains two pairs or three of a kind.
 	 * 
 	 * @return whether or not the hand contains one pair
 	 */
@@ -103,4 +108,45 @@ public class Hand {
 	    return false;
 	}
 	
+	/**
+	 * Returns whether or not the hand contains two pairs
+	 * <p>
+	 * Warning: This is a private method because it is not meant to be called outside the context
+	 * of the checks done in {@code getRanking()}. This method will return true for two pairs even
+	 * if the hand contains a full house
+	 * 
+	 * @return whether or not the hand contains two pairs
+	 */
+	private boolean isTwoPair() {
+	    Iterator<Entry<Integer, ArrayList<Card>>> it = cardsByRank.entrySet().iterator();
+	    int count = 0;
+	    while (it.hasNext()) {
+	        Map.Entry pair = (Map.Entry)it.next();
+	        if(cardsByRank.get(pair.getKey()).size() >= 2) {
+	        	++count;
+	        }
+	    }
+	    return count >= 2;
+	}
+
+	
+	/**
+	 * Returns whether or not the hand contains three of a kind
+	 * <p>
+	 * Warning: This is a private method because it is not meant to be called outside the context
+	 * of the checks done in {@code getRanking()}. This method will return true for three of a kind
+	 * even if the hand contains a full house
+	 * 
+	 * @return whether or not the hand contains three of a kind
+	 */
+	private boolean isThreeOfAKind() {
+	    Iterator<Entry<Integer, ArrayList<Card>>> it = cardsByRank.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pair = (Map.Entry)it.next();
+	        if(cardsByRank.get(pair.getKey()).size() >= 3) {
+	        	return true;
+	        }
+	    }
+	    return false;
+	}
 }
