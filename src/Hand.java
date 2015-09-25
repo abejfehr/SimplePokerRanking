@@ -80,6 +80,9 @@ public class Hand {
 	 * @return the ranking of the hand
 	 */
 	public int getRanking() {
+		if(isRoyalFlush()) {
+			return Ranking.ROYAL_FLUSH;
+		}
 		if(isStraight() && isFlush()) {
 			return Ranking.STRAIGHT_FLUSH;
 		}
@@ -229,4 +232,15 @@ public class Hand {
 	    return hasThreeOfAKind && hasPair;
 	}
 	
+	/**
+	 * Returns whether or not the hand is a royal flush
+	 * 
+	 * @return whether or not the hand is a royal flush
+	 */
+	private boolean isRoyalFlush() {
+		return isStraight() &&                   // A royal flush has a straight...
+			   isFlush() &&                      // ...a flush...
+			   cardsByRank.get(1).size() == 1 && // ...contains an ace...
+			   cardsByRank.get(13).size() == 1;  // ...and a king(to make sure it wasn't a low ace)
+	}
 }
