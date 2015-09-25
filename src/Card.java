@@ -1,7 +1,7 @@
 
 public class Card {
 
-	private int rank;
+	private int rank = -1;
 	private String suit;
 	
 	public static final String HEARTS = "Hearts";
@@ -13,13 +13,17 @@ public class Card {
 	 * Creates an instance of the {@code Card} class
 	 * 
 	 * @param card the RankSuit string for the rank and suit of the card
+	 * @throws ImpossibleCardException 
 	 */
-	Card(String card) {
+	Card(String card) throws ImpossibleCardException {
 		for(String SUIT : new String[]{ HEARTS, DIAMONDS, SPADES, CLUBS }) {
 			if(card.substring(card.length() - SUIT.length()).equalsIgnoreCase(SUIT)) {
 				suit = SUIT;
 				rank = getRankFrom(card.substring(0, card.length() - SUIT.length()));
 			}
+		}
+		if(rank == -1 || suit == null) {
+			throw new ImpossibleCardException();
 		}
 	}
 	
@@ -45,38 +49,38 @@ public class Card {
 	/**
 	 * Converts the rank of a card given as a string to an integer
 	 * <p>
-	 * Examples of accepted input: Three, Five, Ace, King, etc.
+	 * Examples of accepted input: Three, five, ace, KING, etc.
 	 * 
 	 * @param rankString the numerical rank of a card written as a word
 	 * @return the integer rank of a card, -1 if input is an unknown word
 	 */
 	private int getRankFrom(String rankString) {
-		switch(rankString) {
-		case "Ace":
+		switch(rankString.toLowerCase()) {
+		case "ace":
 			return 1;
-		case "Two":
+		case "two":
 			return 2;
-		case "Three":
+		case "three":
 			return 3;
-		case "Four":
+		case "four":
 			return 4;
-		case "Five":
+		case "five":
 			return 5;
-		case "Six":
+		case "six":
 			return 6;
-		case "Seven":
+		case "seven":
 			return 7;
-		case "Eight":
+		case "eight":
 			return 8;
-		case "Nine":
+		case "nine":
 			return 9;
-		case "Ten":
+		case "ten":
 			return 10;
-		case "Jack":
+		case "jack":
 			return 11;
-		case "Queen":
+		case "queen":
 			return 12;
-		case "King":
+		case "king":
 			return 13;
 		default:
 			return -1;

@@ -15,8 +15,9 @@ public class Hand {
 	 * @param playerId the player's ID in the game
 	 * @param cards a whitespace separated list of cards, given in RankSuit format. For example: 
 	 *        "TwoHearts AceSpades" would constitute a valid hand
+	 * @throws ImpossibleCardException 
 	 */
-	public Hand(int playerId, String hand) {
+	public Hand(int playerId, String hand) throws ImpossibleCardException {
 		
 		// Initialize the lists of cards
 		cards = new ArrayList<Card>();
