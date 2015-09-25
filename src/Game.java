@@ -3,6 +3,7 @@ import java.util.HashMap;
 public class Game {
 
 	private int numPlayers;
+	private int gameState;
 	private HashMap<Integer, String> players;
 	
 	/**
@@ -10,6 +11,7 @@ public class Game {
 	 */
 	public Game() {
 		this.numPlayers = 0;
+		this.gameState = GameState.SETUP;
 		this.players = new HashMap<Integer, String>();
 	}
 	
@@ -18,9 +20,7 @@ public class Game {
 	 * 
 	 * @return the number of players in the game
 	 */
-	public int getNumPlayers() {
-		return numPlayers;
-	}
+	public int getNumPlayers() { return numPlayers; }
 	
 	/**
 	 * Adds a player to the game
@@ -33,4 +33,6 @@ public class Game {
 		players.put(playerId, hand);
 		++numPlayers;
 	}
+	
+	public int getState() { return gameState; }
 }

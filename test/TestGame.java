@@ -9,6 +9,7 @@ public class TestGame {
 		Game game = new Game();
 
 		assertTrue(game.getNumPlayers() == 0);
+		assertTrue(game.getState() == GameState.SETUP);
 	}
 	
 	@Test
