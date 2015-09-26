@@ -75,16 +75,7 @@ public class Hand {
 	public int getNumCards() {
 		return cards.size();
 	}
-	
-	/**
-	 * Returns whether or not the cards in the hand are already sorted
-	 * 
-	 * @return true if the hand is sorted, false if not
-	 */
-	public boolean isSorted() {
-		return false;
-	}
-	
+
 	/**
 	 * Gets the ranking of the hand
 	 * 

@@ -39,12 +39,6 @@ public class TestHand {
 	}
 
 	@Test
-	public void testHandNotSorted() throws ImpossibleCardException, NonStandardHandException {
-		Hand hand = new Hand(arbitraryPlayerId, highCardHand);
-		assertFalse(hand.isSorted());
-	}
-	
-	@Test
 	public void testRankingHighCard() throws ImpossibleCardException, NonStandardHandException {
 		Hand hand = new Hand(arbitraryPlayerId, highCardHand);
 		assertEquals(hand.getRanking(), Ranking.HIGH_CARD);

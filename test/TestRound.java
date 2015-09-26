@@ -44,4 +44,26 @@ public class TestRound {
 		game.addPlayer(arbitraryPlayerId3, arbitraryHand3);
 		fail(); // Test fails if it gets here, exception should've been thrown by now
 	}
+
+	@Test(expected=Exception.class)
+	public void testAddPlayersOutOfOrder() throws Exception {
+		Round game = new Round();
+		
+		int arbitraryPlayerId = 1;
+		String arbitraryHand = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
+
+		int arbitraryPlayerId2 = 5;
+		String arbitraryHand2 = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
+
+		game.addPlayer(arbitraryPlayerId, arbitraryHand);
+		game.addPlayer(arbitraryPlayerId2, arbitraryHand2);
+
+		game.rankPlayers();
+		
+		int arbitraryPlayerId3 = 1;
+		String arbitraryHand3 = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
+
+		game.addPlayer(arbitraryPlayerId3, arbitraryHand3);
+		fail(); // Test fails if it gets here, exception should've been thrown by now
+	}
 }
