@@ -31,6 +31,12 @@ public class TestHand {
 		new Hand(arbitraryPlayerId, "TwoHearts AceSpades");
 		fail();
 	}
+	
+	@Test(expected=NonStandardHandException.class)
+	public void testHandDuplicateCards() throws ImpossibleCardException, NonStandardHandException {
+		new Hand(arbitraryPlayerId, "TwoHearts TwoHearts AceSpades FourDiamonds FiveDiamonds");
+		fail();
+	}
 
 	@Test
 	public void testHandNotSorted() throws ImpossibleCardException, NonStandardHandException {

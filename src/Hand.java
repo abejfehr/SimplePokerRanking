@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TreeMap;
 
 public class Hand {
@@ -16,7 +18,8 @@ public class Hand {
 	 * @param cards a whitespace separated list of cards, given in RankSuit format. For example: 
 	 *        "TwoHearts AceSpades" would constitute a valid hand
 	 * @throws ImpossibleCardException when an impossible card is created(eg. FourGoats, etc)
-	 * @throws NonStandardHandException when a number other than 5 cards is given
+	 * @throws NonStandardHandException when a number other than 5 cards is given, or when
+	 *         duplicate cards are given
 	 */
 	public Hand(int playerId, String hand) throws ImpossibleCardException, NonStandardHandException {
 		
@@ -25,10 +28,17 @@ public class Hand {
 		cardsBySuit = new TreeMap<String, ArrayList<Card>>();
 		cardsByRank = new TreeMap<Integer, ArrayList<Card>>();
 		
-		String[] rankSuits = hand.split("\\s+");
+		String[] rankSuits = hand.toLowerCase().split("\\s+");
 		// A hand needs 5 cards
 		if(rankSuits.length != 5) {
 			throw new NonStandardHandException();
+		}
+		// Make sure there's no duplicates
+		Set<String> lump = new HashSet<String>();
+		for (String i : rankSuits) {
+			if (lump.contains(i))
+				throw new NonStandardHandException();
+			lump.add(i);
 		}
 		for(String rankSuit : rankSuits) {
 			Card card = new Card(rankSuit);

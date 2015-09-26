@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class Game {
+public class Round {
 
 	private int numPlayers;
 	private int gameState;
@@ -9,9 +9,9 @@ public class Game {
 	/**
 	 * Creates a new instance of the {@code Game} class
 	 */
-	public Game() {
+	public Round() {
 		this.numPlayers = 0;
-		this.gameState = GameState.SETUP;
+		this.gameState = RoundState.SETUP;
 		this.players = new HashMap<Integer, String>();
 	}
 	
@@ -28,14 +28,16 @@ public class Game {
 	 * @param playerId the ID of the player to add
 	 * @param hand the list of cards in the player's hand, formatted as RankSuit separated by 
 	 *        whitespace. Example: "TwoHearts AceSpades"
-	 * @throws IllegalGameStateException if the game is not in setup when trying to add a player
+	 * @throws Exception when the player's ID doesn't match what it should be
 	 */
-	public void addPlayer(int playerId, String hand) throws IllegalGameStateException {
-		if(gameState != GameState.SETUP) {
-			throw new IllegalGameStateException();
+	public void addPlayer(int playerId, String hand) throws Exception {
+		if(gameState != RoundState.SETUP) {
+			throw new IllegalRoundStateException();
+		}
+		if(playerId != ++numPlayers) {
+			throw new Exception();
 		}
 		players.put(playerId, hand);
-		++numPlayers;
 	}
 	
 	/**
@@ -54,6 +56,6 @@ public class Game {
 		if(numPlayers < 2 || numPlayers > 4) {
 			throw new Exception();
 		}
-			gameState = GameState.RANKING;
+			gameState = RoundState.RANKING;
 	}
 }

@@ -16,10 +16,18 @@ public class Main {
 		int numPlayers = input.nextInt();
 		
 		// Add that many players
-		clearConsole();
-		for(int i=0;i<numPlayers;++i) {
+		//clearConsole();
+		for(int i=1;i<=numPlayers;++i) {
 			System.out.println("What are the cards in the player's hand?");
-			input.nextLine();
+			String handString = input.next();
+			System.out.println("The hand you chose was: \n" + handString);
+			try {
+				new Hand(i, handString);
+			} catch (NonStandardHandException e) {
+				System.out.println("5 Cards need to be given!");
+			} catch (ImpossibleCardException e) {
+				System.out.println("An impossible card was given!");
+			}
 		}
 		
 		input.close();

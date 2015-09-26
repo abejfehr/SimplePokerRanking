@@ -2,19 +2,19 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class TestGame {
+public class TestRound {
 
 	@Test
 	public void testGameNoPlayers() {
-		Game game = new Game();
+		Round game = new Round();
 
 		assertEquals(game.getNumPlayers(), 0);
-		assertEquals(game.getState(), GameState.SETUP);
+		assertEquals(game.getState(), RoundState.SETUP);
 	}
 	
 	@Test
-	public void testAddPlayerToGame() throws IllegalGameStateException {
-		Game game = new Game();
+	public void testAddPlayerToGame() throws Exception {
+		Round game = new Round();
 		
 		int arbitraryPlayerId = 1;
 		String arbitraryHand = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
@@ -23,9 +23,9 @@ public class TestGame {
 		assertEquals(game.getNumPlayers(), 1);
 	}
 
-	@Test(expected=IllegalGameStateException.class)
+	@Test(expected=IllegalRoundStateException.class)
 	public void testAddPlayerAfterRanking() throws Exception {
-		Game game = new Game();
+		Round game = new Round();
 		
 		int arbitraryPlayerId = 1;
 		String arbitraryHand = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
