@@ -25,15 +25,17 @@ public class Round {
 	/**
 	 * Adds a player to the game
 	 * 
-	 * @param playerId the ID of the player to add
 	 * @param hand the list of cards in the player's hand, formatted as RankSuit separated by 
 	 *        whitespace. Example: "TwoHearts AceSpades"
 	 * @throws Exception when the player's ID doesn't match what it should be
 	 */
-	public void addPlayer(int playerId, String hand) throws Exception {
+	public void addPlayer(String player) throws Exception {
 		if(gameState != RoundState.SETUP) {
 			throw new IllegalRoundStateException();
 		}
+		player = player.trim();
+		int playerId = Integer.parseInt(player.split("\\s")[0]);
+		String hand = player.substring(player.indexOf(" "));
 		if(playerId != ++numPlayers) {
 			throw new Exception();
 		}

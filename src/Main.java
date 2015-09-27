@@ -3,6 +3,9 @@ import java.util.Scanner;
 
 public class Main {
 
+	private static int currentRound = 1;
+	private static boolean playing = true;
+	
 	/**
 	 * The main entry point of the game
 	 */
@@ -10,26 +13,47 @@ public class Main {
 		// We'll need this
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Welcome to Simple Poker Hand Ranking.");
-		System.out.println("");
-		System.out.println("Please enter the number of players below:");
-		int numPlayers = input.nextInt();
+		System.out.println("Welcome to Simple Poker Ranking!\n");
 		
-		// Add that many players
-		//clearConsole();
-		for(int i=1;i<=numPlayers;++i) {
-			System.out.println("What are the cards in the player's hand?");
-			String handString = input.next();
-			System.out.println("The hand you chose was: \n" + handString);
-			try {
-				new Hand(i, handString);
-			} catch (NonStandardHandException e) {
-				System.out.println("5 Cards need to be given!");
-			} catch (ImpossibleCardException e) {
-				System.out.println("An impossible card was given!");
-			}
+		while(playing) {
+			Round round = new Round();
+			System.out.println("Round " + currentRound++);
+			System.out.println("Type each player's hand. When you're finished "
+					+ "entering hands, press enter with a blank prompt.");
+			String inputString = null;
+			int playerNumber = 1;
+			do {
+				System.out.print("Player " + playerNumber + "'s Hand> ");
+				inputString = input.nextLine();
+				if(inputString.trim().isEmpty()) { break; }
+				try {
+					round.addPlayer(inputString);
+					++playerNumber;
+				} catch (Exception e) {
+					System.out.println("Failed to add the player.");
+					System.out.println("Ensure that none of your cards are spelled wrong, your "
+							+ "hand contains 5 cards, and that there are no duplicates.");
+				}
+			} while(!inputString.trim().isEmpty());
+		
+			System.out.println("Ranking Hands now");
+			
+			// Print out the hands in order somehow
+			//ArrayList<Hand> rankedHands = round.getRankedHands();
+			
+			System.out.println("Would you like to try another round?");
+			do {
+				System.out.print("Response (y/n): ");
+				inputString = input.nextLine();
+				if(inputString.trim().equals("y")) {
+					break;
+				} else if(inputString.trim().equals("n")) {
+					System.out.println("Thanks for playing!");
+					playing = false;
+					break;
+				}
+			} while(!inputString.trim().equalsIgnoreCase("y"));
 		}
-		
 		input.close();
 	}
 	
