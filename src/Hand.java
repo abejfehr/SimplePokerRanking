@@ -285,4 +285,19 @@ public class Hand implements Comparable<Hand> {
 	 * @return the player's ID
 	 */
 	public int getPlayerId() { return playerId; }
+
+	/**
+	 * Checks if this hand contains a card from another hand
+	 *
+	 * @param hand the hand whose cards to compare to
+	 * @return whether or not this hand and the one passed in contain any of the same cards
+	 */
+	public boolean containsCardFrom(Hand hand) {
+		for(Card c1 : cards) {
+			for(Card c2 : hand.cards) {
+				if(c1.equals(c2)) { return true; }
+			}
+		}
+		return false;
+	}
 }

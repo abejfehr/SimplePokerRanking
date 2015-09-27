@@ -29,4 +29,14 @@ public class TestCard {
 		new Card("ThreeShovels");
 		fail();
 	}	
+	
+	@Test
+	public void testEquality() throws ImpossibleCardException {
+		Card twoHearts = new Card("TwoHearts");
+		Card anotherTwoHearts = new Card("TwoHearts");
+		Card aceSpades = new Card("AceSpades");
+		
+		assertTrue(twoHearts.equals(anotherTwoHearts));
+		assertFalse(twoHearts.equals(aceSpades));
+	}
 }

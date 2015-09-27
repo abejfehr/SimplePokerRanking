@@ -106,4 +106,12 @@ public class TestHand {
 		// Sanity test
 		assertFalse(higherHand.compareTo(lowerHand) > 0);
 	}
+	
+	@Test
+	public void testHandsContainOtherCards() throws ImpossibleCardException, NonStandardHandException {
+		Hand royalFlushHearts = new Hand(arbitraryPlayerId, "TenHearts JackHearts QueenHearts KingHearts AceHearts");
+		Hand otherHandWithAceHearts = new Hand(arbitraryPlayerId, "AceHearts TwoHearts ThreeHearts FourHearts FiveHearts");
+		
+		assertTrue(royalFlushHearts.containsCardFrom(otherHandWithAceHearts));
+	}
 }

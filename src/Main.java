@@ -24,18 +24,27 @@ public class Main {
 			String inputString = null;
 			int playerNumber = 1;
 			do {
+				boolean redo = false;
 				System.out.print("Player " + playerNumber + "'s Hand> ");
 				inputString = input.nextLine();
-				if(inputString.trim().isEmpty()) { break; }
-				try {
-					round.addPlayer(inputString);
-					++playerNumber;
-				} catch (Exception e) {
-					System.out.println("Failed to add the player.");
-					System.out.println("Ensure that none of your cards are spelled wrong, your "
-							+ "hand contains 5 cards, and that there are no duplicates.");
+				if(inputString.trim().isEmpty()) { 
+					if(playerNumber > 2) { break; }
+					else {
+						System.out.println("You need 2 to 4 players inclusive.");
+						redo = true;
+					}
 				}
-			} while(!inputString.trim().isEmpty());
+				if(!redo) {
+					try {
+						round.addPlayer(inputString);
+						++playerNumber;
+					} catch (Exception e) {
+						System.out.println("Failed to add the player.");
+						System.out.println("Ensure that none of your cards are spelled wrong, your "
+								+ "hand contains 5 cards, and that there are no duplicates.");
+					}
+				}
+			} while(playerNumber <= 4);
 		
 			System.out.println("Ranking Hands now");
 			

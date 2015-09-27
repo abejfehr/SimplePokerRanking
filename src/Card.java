@@ -111,4 +111,14 @@ public class Card {
 		}
 		return (rankString != null ? rankString : rank) + " of " + suit;
 	}
+	
+	/**
+	 * Determines if this card is equal to another in suit and rank
+	 * 
+	 * @param otherCard the card to compare with
+	 * @return whether or not this card is equal to another in suit and rank
+	 */
+	public boolean equals(Card otherCard) {
+		return (this.rank == otherCard.rank && this.suit.equals(otherCard.suit));
+	}
 }

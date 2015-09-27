@@ -32,7 +32,8 @@ public class Round {
 	 * 
 	 * @param hand the list of cards in the player's hand, formatted as RankSuit separated by 
 	 *        whitespace. Example: "TwoHearts AceSpades"
-	 * @throws Exception when the player's ID doesn't match what it should be
+	 * @throws Exception when the player's ID doesn't match what it should be, or when a hand is
+	 *         given that contains a card already in use by another hand
 	 */
 	public void addPlayer(String player) throws Exception {
 		if(roundState != RoundState.SETUP) {
@@ -40,11 +41,18 @@ public class Round {
 		}
 		player = player.trim();
 		int playerId = Integer.parseInt(player.split("\\s")[0]);
-		String hand = player.substring(player.indexOf(" ")).trim();
+		Hand hand = new Hand(playerId, player.substring(player.indexOf(" ")).trim());
+		// Check to make sure the hand doesn't contain cards that another hand already does
+		for(int i=1;i<=numPlayers;++i) {
+			if(players.get(i).containsCardFrom(hand)) {
+				throw new Exception();
+			}
+		}
+		// Ensure that the player ID is as expected
 		if(playerId != ++numPlayers) {
 			throw new Exception();
 		}
-		players.put(playerId, new Hand(playerId, hand));
+		players.put(playerId, hand);
 	}
 	
 	/**

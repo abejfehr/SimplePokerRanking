@@ -27,12 +27,14 @@ public class TestRound {
 	@Test(expected=IllegalRoundStateException.class)
 	public void testAddPlayerAfterRanking() throws Exception {
 		Round round = new Round();
-		String arbitraryHand = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
+		String player1Hand = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
+		String player2Hand = "TwoDiamonds AceClubs SixSpades SevenSpades FiveClubs";
+		String player3Hand = "KingHearts KingSpades QueenHearts QueenDiamonds ThreeSpades";
 		
-		round.addPlayer(1 + " " + arbitraryHand);
-		round.addPlayer(2 + " " + arbitraryHand);
+		round.addPlayer(1 + " " + player1Hand);
+		round.addPlayer(2 + " " + player2Hand);
 		round.getRankedHands();
-		round.addPlayer(3 + " " + arbitraryHand);
+		round.addPlayer(3 + " " + player3Hand);
 		
 		fail(); // Test fails if it gets here, exception should've been thrown by now
 	}
@@ -40,12 +42,14 @@ public class TestRound {
 	@Test(expected=Exception.class)
 	public void testAddPlayersOutOfOrder() throws Exception {
 		Round round = new Round();
-		String arbitraryHand = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
+		String player1Hand = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
+		String player2Hand = "TwoDiamonds AceClubs SixSpades SevenSpades FiveClubs";
+		String player3Hand = "KingHearts KingSpades QueenHearts QueenDiamonds ThreeSpades";
 
-		round.addPlayer(1 + " " + arbitraryHand);
-		round.addPlayer(3 + " " + arbitraryHand);
+		round.addPlayer(1 + " " + player1Hand);
+		round.addPlayer(3 + " " + player3Hand);
 		round.getRankedHands();
-		round.addPlayer(2 + " " + arbitraryHand);
+		round.addPlayer(2 + " " + player2Hand);
 		
 		fail(); // Test fails if it gets here, exception should've been thrown by now
 	}
@@ -59,9 +63,21 @@ public class TestRound {
 		round.addPlayer(1 + " " + losingHand); // The losing hand first
 		round.addPlayer(2 + " " + winningHand);
 		
-		List<Hand> rankedHands = round.getRankedHands(); // Should return the ranked hands at some point
+		List<Hand> rankedHands = round.getRankedHands();
 		
 		assertEquals(rankedHands.get(0).getRanking(), Ranking.ROYAL_FLUSH);
 		assertEquals(rankedHands.get(1).getRanking(), Ranking.HIGH_CARD);
+	}
+	
+	@Test(expected=Exception.class)
+	public void testDuplicateCardsBetweenHands() throws Exception {
+		Round round = new Round();
+		String hand1 = "TwoHearts ThreeHearts FourHearts FiveHearts SixHearts";
+		String hand2 = "TwoDiamonds ThreeDiamonds FourDiamonds FiveDiamonds SixHearts";
+		
+		round.addPlayer(1 + " " + hand1);
+		round.addPlayer(2 + " " + hand2);
+		
+		fail();
 	}
 }
