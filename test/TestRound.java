@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 
 public class TestRound {
@@ -29,7 +31,7 @@ public class TestRound {
 		
 		round.addPlayer(1 + " " + arbitraryHand);
 		round.addPlayer(2 + " " + arbitraryHand);
-		round.rankPlayers();
+		round.getRankedHands();
 		round.addPlayer(3 + " " + arbitraryHand);
 		
 		fail(); // Test fails if it gets here, exception should've been thrown by now
@@ -42,7 +44,7 @@ public class TestRound {
 
 		round.addPlayer(1 + " " + arbitraryHand);
 		round.addPlayer(3 + " " + arbitraryHand);
-		round.rankPlayers();
+		round.getRankedHands();
 		round.addPlayer(2 + " " + arbitraryHand);
 		
 		fail(); // Test fails if it gets here, exception should've been thrown by now
@@ -51,12 +53,15 @@ public class TestRound {
 	@Test
 	public void testGetRankedHands() throws Exception {
 		Round round = new Round();
-		String arbitraryHand = "TwoHearts AceSpades AceHearts AceDiamonds FiveSpades";
+		String losingHand = "TwoHearts AceSpades QueenDiamonds SixSpades FiveSpades";
+		String winningHand = "TenHearts JackHearts QueenHearts KingHearts AceHearts";
 
-		round.addPlayer(1 + " " + arbitraryHand);
-		round.addPlayer(2 + " " + arbitraryHand);
-		round.addPlayer(3 + " " + arbitraryHand);
+		round.addPlayer(1 + " " + losingHand); // The losing hand first
+		round.addPlayer(2 + " " + winningHand);
 		
-		round.rankPlayers(); // Should return the ranked hands at some point
+		List<Hand> rankedHands = round.getRankedHands(); // Should return the ranked hands at some point
+		
+		assertEquals(rankedHands.get(0).getRanking(), Ranking.ROYAL_FLUSH);
+		assertEquals(rankedHands.get(1).getRanking(), Ranking.HIGH_CARD);
 	}
 }

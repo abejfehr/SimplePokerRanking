@@ -86,4 +86,29 @@ public class Card {
 			return -1;
 		}
 	}
+	
+	/**
+	 * Returns the human-readable representation of a card
+	 * 
+	 * @return the human-readable representation of a card
+	 */
+	@Override
+	public String toString() {
+		String rankString = null;
+		switch(rank) {
+		case 1:
+			rankString = "Ace";
+			break;
+		case 11:
+			rankString = "Jack";
+			break;
+		case 12:
+			rankString = "Queen";
+			break;
+		case 13:
+			rankString = "King";
+			break;
+		}
+		return (rankString != null ? rankString : rank) + " of " + suit;
+	}
 }

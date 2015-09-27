@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -39,7 +40,14 @@ public class Main {
 			System.out.println("Ranking Hands now");
 			
 			// Print out the hands in order somehow
-			//ArrayList<Hand> rankedHands = round.getRankedHands();
+			try {
+				List<Hand> rankedHands = round.getRankedHands();
+				for(Hand hand : rankedHands) {
+					System.out.println("Player " + hand.getPlayerId() + " [" + hand + "] Score: " + hand.getRanking());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
 			System.out.println("Would you like to try another round?");
 			do {

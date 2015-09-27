@@ -97,4 +97,13 @@ public class TestHand {
 		Hand hand = new Hand(arbitraryPlayerId, royalFlushHand);
 		assertEquals(hand.getRanking(), Ranking.ROYAL_FLUSH);
 	}
+	
+	@Test
+	public void testHandsComparable() throws ImpossibleCardException, NonStandardHandException {
+		Hand lowerHand = new Hand(arbitraryPlayerId, highCardHand);
+		Hand higherHand = new Hand(arbitraryPlayerId, fullHouseHand);
+		assertTrue(lowerHand.compareTo(higherHand) > 0);
+		// Sanity test
+		assertFalse(higherHand.compareTo(lowerHand) > 0);
+	}
 }

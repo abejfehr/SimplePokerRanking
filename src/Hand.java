@@ -5,8 +5,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class Hand {
+public class Hand implements Comparable<Hand> {
 	
+	private int playerId;
 	private ArrayList<Card> cards;
 	private TreeMap<String, ArrayList<Card>> cardsBySuit;
 	private TreeMap<Integer, ArrayList<Card>> cardsByRank;
@@ -22,6 +23,8 @@ public class Hand {
 	 *         duplicate cards are given
 	 */
 	public Hand(int playerId, String hand) throws ImpossibleCardException, NonStandardHandException {
+		
+		this.playerId = playerId;
 		
 		// Initialize the lists of cards
 		cards = new ArrayList<Card>();
@@ -245,4 +248,41 @@ public class Hand {
 			   cardsByRank.get(1).size() == 1 && // ...contains an ace...
 			   cardsByRank.get(13).size() == 1;  // ...and a king(to make sure it wasn't a low ace)
 	}
+
+	/**
+	 * Compares the hand to another
+	 * 
+	 * @param otherHand the hand to compare this one to
+	 * @return a positive integer if this is before the passed object, a negative number if this is
+	 *         after the passed object, and 0 if they're equal
+	 */
+	@Override
+	public int compareTo(Hand otherHand) { return otherHand.getRanking() - getRanking(); }
+	
+	/**
+	 * Returns a human-readable string of all the cards in the hand
+	 * 
+	 * @return a human-readable string of all the cards in the hand
+	 */
+	@Override
+	public String toString() {
+		String returnString = "";
+		
+		for(int i=0;i<13;++i) {
+			if(cardsByRank.get(i) != null && !cardsByRank.get(i).isEmpty()) {
+				for(Card c : cardsByRank.get(i)) {
+					returnString += c + ", ";
+				}
+			}
+		}
+		
+		return returnString.substring(0, returnString.length()-2);
+	}
+	
+	/**
+	 * Returns the player's ID
+	 * 
+	 * @return the player's ID
+	 */
+	public int getPlayerId() { return playerId; }
 }
